@@ -15,7 +15,11 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 30) {
             Text("Подвиньте слайдер, как можно ближе к: \(targetValue)")
-            Slider(value: $currentValue, in: 0...100)
+            HStack(spacing: 10) {
+                Text("0")
+                CustomSlider(curentValue: $currentValue)
+                Text("100")
+            }
             Button("Проверь меня!") {
                 showingAlert = true
             }
