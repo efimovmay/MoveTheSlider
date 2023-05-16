@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomSlider: UIViewRepresentable {
     
     @Binding var curentValue: Double
+    
     let alpha: Int
     
     func makeUIView(context: Context) -> UISlider {
