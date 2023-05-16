@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var currentValue: Double = 0
+    @State var currentValue = Double.random(in: 0...100)
     @State private var targetValue = Int.random(in: 0...100)
     @State private var showingAlert = false
     
@@ -17,14 +17,15 @@ struct ContentView: View {
             Text("Подвиньте слайдер, как можно ближе к: \(targetValue)")
             HStack(spacing: 10) {
                 Text("0")
-                CustomSlider(curentValue: $currentValue)
+                CustomSlider(curentValue: $currentValue,
+                             alpha: computeScore())
                 Text("100")
             }
             Button("Проверь меня!") {
                 showingAlert = true
             }
             .alert(isPresented: $showingAlert) {
-                let score = computeScore(targetValue, currentValue)
+                let score = computeScore()
                 return Alert(
                     title: Text("Your Score"),
                     message: Text("\(score)"),
@@ -37,6 +38,11 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    private func computeScore() -> Int {
+        let difference = abs(targetValue - lround(currentValue))
+        return 100 - difference
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -45,7 +51,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-private func computeScore(_ targetValue: Int, _ currentValue: Double ) -> Int {
-    let difference = abs(targetValue - lround(currentValue))
-    return 100 - difference
-}
+
